@@ -1,7 +1,12 @@
 <template>
   <q-page class="q-pa-md">
     <div class="row q-mb-md">
-      <q-input filled v-model="newTask" label="Add a new task" @keyup.enter="addTask" />
+      <q-input
+        filled
+        v-model="newTask"
+        label="Add a new task"
+        @keyup.enter="addTask"
+      />
       <q-btn label="Add Task" color="primary" @click="addTask" />
     </div>
 
@@ -15,7 +20,12 @@
             <span :class="{ 'line-through': task.done }">{{ task.text }}</span>
           </q-item-section>
           <q-item-section side>
-            <q-btn flat icon="delete" color="negative" @click="removeTask(index)" />
+            <q-btn
+              flat
+              icon="delete"
+              color="negative"
+              @click="removeTask(index)"
+            />
           </q-item-section>
         </q-item>
       </q-list>
@@ -23,26 +33,23 @@
   </q-page>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      newTask: '',
-      tasks: []
-    }
-  },
-  methods: {
-    addTask() {
-      if (this.newTask.trim()) {
-        this.tasks.push({ text: this.newTask, done: false });
-        this.newTask = '';
-      }
-    },
-    removeTask(index) {
-      this.tasks.splice(index, 1);
-    }
+<script setup>
+import { ref } from "vue";
+
+const newTask = ref("");
+const tasks = ref([]);
+
+const addTask = () => {
+  if (newTask.value.trim()) {
+    tasks.value.push({ text: newTask.value, done: false });
+    newTask.value = "";
   }
-}
+};
+
+const removeTask = () => {
+  tasks.value.splice(index, 1);
+};
+
 // http://localhost:9000/#/
 </script>
 
@@ -54,4 +61,3 @@ export default {
   text-decoration: line-through;
 }
 </style>
-
